@@ -87,7 +87,12 @@ object NumberGuesser extends App {
     * the number, feeding their response to `analyzeAnswer`, above.
     */
   def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
-    ???
+    (for {
+      rand <- nextInt(3)
+      _ <- putStrLn("Please enter a random integer from 0 to 3")
+      input <- getStrLn
+      _ <- analyzeAnswer(rand, input)
+    } yield (0)) orElse (ZIO.succeed(1))
 }
 
 object AlarmApp extends App {
