@@ -45,7 +45,12 @@ object PromptName extends App {
     * Implement a simple program that asks the user for their name (using
     * `getStrLn`), and then prints it out to the user (using `putStrLn`).
     */
-  def run(args: List[String]): ZIO[ZEnv, Nothing, Int] = ???
+  def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
+    (for {
+      _ <- putStrLn("What is their name?")
+      name <- getStrLn
+      _ <- putStrLn(s"Hello, ${name}")
+    } yield 0) orElse ZIO.succeed(1)
 }
 
 object ZIOTypes {
