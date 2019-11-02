@@ -124,7 +124,12 @@ object AlarmApp extends App {
     * alarm message.
     */
   def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
-    ???
+    (for {
+      _        <- putStrLn("Welcome to ZIO Alarm Clock!")
+      duration <- getAlarmDuration
+      _        <- ZIO.sleep(duration) // sleep doesn't block
+      _        <- putStrLn("TIME TO WAKE UP!!!!!")
+    } yield 0) orElse ZIO.succeed(1)
 }
 
 object Cat extends App {
