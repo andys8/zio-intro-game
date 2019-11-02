@@ -102,14 +102,18 @@ object AlarmApp extends App {
     * Create an effect that will get a `Duration` from the user, by prompting
     * the user to enter a decimal number of seconds.
     */
+  // lazy because of recursion
   lazy val getAlarmDuration: ZIO[Console, IOException, Duration] = {
     def parseDuration(input: String): IO[NumberFormatException, Duration] =
-      ???
+      ZIO.effect(input.toInt.seconds).refineToOrDie[NumberFormatException]
 
     def fallback(input: String): ZIO[Console, IOException, Duration] =
-      ???
+      parseDuration(input) orElse
+        (putStrLn("You entered bad input!") *> getAlarmDuration)
 
-    ???
+    putStrLn("Please enter the time to sleep in seconds:")
+      .flatMap(_ => getStrLn)
+      .flatMap(fallback)
   }
 
   /**
