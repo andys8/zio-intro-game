@@ -47,9 +47,9 @@ object PromptName extends App {
     */
   def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
     (for {
-      _ <- putStrLn("What is their name?")
+      _    <- putStrLn("What is their name?")
       name <- getStrLn
-      _ <- putStrLn(s"Hello, ${name}")
+      _    <- putStrLn(s"Hello, ${name}")
     } yield 0) orElse ZIO.succeed(1)
 }
 
@@ -61,14 +61,10 @@ object ZIOTypes {
     *
     * Provide definitions for the ZIO type aliases below.
     */
-  // Doesn't need anything, can fail with throwable
-  type Task[+A] = ZIO[Any, Throwable, A]
-  // Can't fail (U=Unexceptional)
-  type UIO[+A] = ZIO[Any, Nothing, A]
-  // For use with Cats-Effect libraries R=Reader
-  type RIO[-R, +A] = ZIO[R, Throwable, A]
-  // Error defined
-  type IO[+E, +A] = ZIO[Any, E, A]
+  type Task[+A]     = ZIO[Any, Throwable, A] // Doesn't need anything, can fail with throwable
+  type UIO[+A]      = ZIO[Any, Nothing, A] // Can't fail (U=Unexceptional)
+  type RIO[-R, +A]  = ZIO[R, Throwable, A] // For use with Cats-Effect libraries R=Reader
+  type IO[+E, +A]   = ZIO[Any, E, A] // Error defined
   type URIO[-R, +A] = ZIO[R, Nothing, A]
 }
 
@@ -88,10 +84,10 @@ object NumberGuesser extends App {
     */
   def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
     (for {
-      rand <- nextInt(3)
-      _ <- putStrLn("Please enter a random integer from 0 to 3")
+      rand  <- nextInt(3)
+      _     <- putStrLn("Please enter a random integer from 0 to 3")
       input <- getStrLn
-      _ <- analyzeAnswer(rand, input)
+      _     <- analyzeAnswer(rand, input)
     } yield (0)) orElse (ZIO.succeed(1))
 }
 
@@ -295,9 +291,9 @@ object Hangman extends App {
 
   sealed trait GuessResult
   object GuessResult {
-    case object Won extends GuessResult
-    case object Lost extends GuessResult
-    case object Correct extends GuessResult
+    case object Won       extends GuessResult
+    case object Lost      extends GuessResult
+    case object Correct   extends GuessResult
     case object Incorrect extends GuessResult
     case object Unchanged extends GuessResult
   }
