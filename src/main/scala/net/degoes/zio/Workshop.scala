@@ -61,11 +61,15 @@ object ZIOTypes {
     *
     * Provide definitions for the ZIO type aliases below.
     */
-  type Task[+A] = ???
-  type UIO[+A] = ???
-  type RIO[-R, +A] = ???
-  type IO[+E, +A] = ???
-  type URIO[-R, +A] = ???
+  // Doesn't need anything, can fail with throwable
+  type Task[+A] = ZIO[Any, Throwable, A]
+  // Can't fail (U=Unexceptional)
+  type UIO[+A] = ZIO[Any, Nothing, A]
+  // For use with Cats-Effect libraries R=Reader
+  type RIO[-R, +A] = ZIO[R, Throwable, A]
+  // Error defined
+  type IO[+E, +A] = ZIO[Any, E, A]
+  type URIO[-R, +A] = ZIO[R, Nothing, A]
 }
 
 object NumberGuesser extends App {
