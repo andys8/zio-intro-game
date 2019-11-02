@@ -11,7 +11,7 @@ object HelloWorld extends App {
     * Implement a simple "Hello World" program using the effect returned by `putStrLn`.
     */
   def run(args: List[String]): ZIO[ZEnv, Nothing, Int] =
-    ZIO.succeed(0)
+    putStrLn("Hello World!").as(0)
 }
 
 object ErrorConversion extends App {
